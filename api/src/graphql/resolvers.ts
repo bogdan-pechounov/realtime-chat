@@ -1,4 +1,5 @@
 import { Context } from 'graphql-passport/lib/buildContext'
+import { PubSub } from 'graphql-subscriptions'
 import Message from '../models/Message'
 import User from '../models/User'
 
@@ -11,10 +12,11 @@ type MessageInput = {
   body: String
 }
 
+const pubsub = new PubSub()
+
 const resolvers = {
   Query: {
     me(_parent: unknown, args: unknown, context: Context<Express.User>) {
-      console.log(context.req.user)
       return context.getUser()
     },
     async users() {
@@ -43,7 +45,15 @@ const resolvers = {
         body,
         user: context.getUser(),
       }).save()
+      pubsub.publish('MESSAGE_CREATED', { messageCreated: message })
       return message
+    },
+  },
+  Subscription: {
+    messageCreated: {
+      subscribe() {
+        return pubsub.asyncIterator(['MESSAGE_CREATED'])
+      },
     },
   },
 }

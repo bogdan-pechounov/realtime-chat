@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <Login />
-      <h1>{data.me.name}</h1>
+      <h1>{data.me?.name}</h1>
       <MessageList />
       <Message />
     </div>

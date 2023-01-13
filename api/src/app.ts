@@ -7,8 +7,9 @@ import cors from 'cors'
 import { ApolloServer } from '@apollo/server'
 import setUpPassport from './config/passport'
 
-function createApp(server: ApolloServer<any>, store: Store) {
-  const app = express()
+export const app = express()
+
+export function setUpApp(server: ApolloServer<any>, store: Store) {
   setUpPassport()
 
   //middlewares
@@ -36,8 +37,4 @@ function createApp(server: ApolloServer<any>, store: Store) {
       context: async ({ req, res }) => buildContext({ req, res }),
     })
   )
-
-  return app
 }
-
-export default createApp
