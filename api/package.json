@@ -21,10 +21,13 @@
   },
   "dependencies": {
     "@apollo/server": "^4.3.0",
+    "@graphql-tools/schema": "^9.0.13",
     "connect-mongo": "^4.6.0",
     "express-session": "^1.17.3",
     "graphql": "^16.6.0",
     "graphql-passport": "^0.6.5",
-    "mongoose": "^6.8.3"
+    "graphql-ws": "^5.11.2",
+    "mongoose": "^6.8.3",
+    "ws": "^8.12.0"
   }
 }

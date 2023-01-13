@@ -14,6 +14,9 @@ export const MESSAGES = gql`
     messages {
       id
       body
+      user {
+        name
+      }
     }
   }
 `

@@ -1,7 +1,7 @@
 import './App.css'
 import Login from './components/Login'
 import { useQuery } from '@apollo/client'
-import { ME } from './utils/queries'
+import { ME } from './graphql/queries'
 import Message from './components/Message'
 import MessageList from './components/MessageList'
 

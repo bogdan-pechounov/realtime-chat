@@ -20,6 +20,10 @@ const typeDefs = `#graphql
     login(name: String!, password: String!): User
     sendMessage(body: String!): Message
   }
+
+  type Subscription {
+    messageCreated: Message
+  }
 `
 
 export default typeDefs

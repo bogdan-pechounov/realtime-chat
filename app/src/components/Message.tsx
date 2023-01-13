@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { SEND_MESSAGE } from '../utils/mutations'
+import { SEND_MESSAGE } from '../graphql/mutations'
 
 function Message() {
   const [sendMessage] = useMutation(SEND_MESSAGE)

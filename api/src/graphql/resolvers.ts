@@ -21,7 +21,7 @@ const resolvers = {
       return await User.find()
     },
     async messages() {
-      return await Message.find()
+      return await Message.find().populate('user')
     },
   },
   Mutation: {
