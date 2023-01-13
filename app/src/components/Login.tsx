@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { useState } from 'react'
-import { LOGIN, ME } from '../utils/queries'
+import { LOGIN } from '../utils/mutations'
+import { ME } from '../utils/queries'
 
 function Login() {
   const [login] = useMutation(LOGIN)

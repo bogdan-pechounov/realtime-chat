@@ -9,10 +9,11 @@ export const ME = gql`
   }
 `
 
-export const LOGIN = gql`
-  mutation ($name: String!, $password: String!) {
-    login(name: $name, password: $password) {
-      name
+export const MESSAGES = gql`
+  query {
+    messages {
+      id
+      body
     }
   }
 `
