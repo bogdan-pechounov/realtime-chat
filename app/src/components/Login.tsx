@@ -8,20 +8,27 @@ function Login() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    login({ variables: { name, password }, refetchQueries: [{ query: ME }] })
+    await login({
+      variables: { name, password },
+      refetchQueries: [{ query: ME }],
+    })
+    setName('')
+    setPassword('')
   }
   return (
     <form onSubmit={onSubmit}>
       <label htmlFor='name'>Username</label>
       <input
+        id='name'
         type='text'
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <label htmlFor='password'>Password</label>
       <input
+        id='password'
         type='password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}

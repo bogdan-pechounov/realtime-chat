@@ -1,19 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
-import App from '../App'
-import Test from '../components/Test'
+import App from '~/App'
+import { customRender } from './utils'
 
-describe('something truthy and falsy', () => {
-  it('true to be true', () => {
-    expect(true).toBe(true)
-  })
-
-  it('false to be false', () => {
-    expect(false).toBe(false)
-  })
-
-  it('renders', () => {
-    render(<Test />)
-    screen.debug()
+describe('App', () => {
+  it('renders', async () => {
+    customRender(<App />)
+    const username = await screen.findByRole('heading', { name: /user/i })
+    expect(username).toBeInTheDocument()
   })
 })
