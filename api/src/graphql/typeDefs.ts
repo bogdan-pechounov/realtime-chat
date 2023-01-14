@@ -1,29 +1,7 @@
-const typeDefs = `#graphql
-  type User {
-    id: String
-    name: String
-  }
+import { readFileSync } from 'fs'
+import path from 'path'
 
-  type Message {
-    id: String
-    body: String
-    user: User
-  }
-
-  type Query {
-    me: User
-    users: [User]
-    messages: [Message]
-  }
-
-  type Mutation {
-    login(name: String!, password: String!): User
-    sendMessage(body: String!): Message
-  }
-
-  type Subscription {
-    messageCreated: Message
-  }
-`
+const schemaPath = path.join(__dirname, 'schema.graphql')
+const typeDefs = readFileSync(schemaPath, { encoding: 'utf-8' })
 
 export default typeDefs

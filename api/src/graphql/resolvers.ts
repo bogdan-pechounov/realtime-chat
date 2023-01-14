@@ -2,19 +2,11 @@ import { Context } from 'graphql-passport/lib/buildContext'
 import { PubSub } from 'graphql-subscriptions'
 import Message from '../models/Message'
 import User from '../models/User'
-
-type LoginInput = {
-  name: String
-  password: String
-}
-
-type MessageInput = {
-  body: String
-}
+import { Resolvers, User as IUser } from '../generated/graphql'
 
 const pubsub = new PubSub()
 
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     me(_parent: unknown, args: unknown, context: Context<Express.User>) {
       return context.getUser()
@@ -27,19 +19,18 @@ const resolvers = {
     },
   },
   Mutation: {
-    async login(_parent: any, { name, password }: LoginInput, context: any) {
-      const { user } = await context.authenticate('graphql-local', {
-        email: name,
-        password,
-      })
+    async login(_parent: any, { name, password }, context: any) {
+      const { user }: { user: IUser } = await context.authenticate(
+        'graphql-local',
+        {
+          email: name,
+          password,
+        }
+      )
       await context.login(user)
       return user
     },
-    async sendMessage(
-      _parent: any,
-      { body }: MessageInput,
-      context: Context<Express.User>
-    ) {
+    async sendMessage(_parent: any, { body }, context: any) {
       if (!context.isAuthenticated()) throw new Error('Not logged in')
       const message = await new Message({
         body,
@@ -51,6 +42,7 @@ const resolvers = {
   },
   Subscription: {
     messageCreated: {
+      //@ts-ignore
       subscribe() {
         return pubsub.asyncIterator(['MESSAGE_CREATED'])
       },

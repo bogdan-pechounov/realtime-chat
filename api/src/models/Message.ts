@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose'
 import { IUser } from './User'
 
 export interface IMessage {
-  body: String
+  body: string
   user: IUser
 }
 
