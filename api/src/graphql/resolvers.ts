@@ -3,10 +3,16 @@ import { PubSub } from 'graphql-subscriptions'
 import Message from '../models/Message'
 import User from '../models/User'
 import { Resolvers, User as IUser } from '../generated/graphql'
+import { isValidObjectId } from 'mongoose'
 
 const pubsub = new PubSub()
 
 const resolvers: Resolvers = {
+  Message: {
+    async user({ user }) {
+      return await User.findById(user)
+    },
+  },
   Query: {
     me(_parent: unknown, args: unknown, context: Context<Express.User>) {
       return context.getUser()
@@ -15,7 +21,7 @@ const resolvers: Resolvers = {
       return await User.find()
     },
     async messages() {
-      return await Message.find().populate('user')
+      return await Message.find()
     },
   },
   Mutation: {
