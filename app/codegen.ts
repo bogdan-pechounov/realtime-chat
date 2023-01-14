@@ -3,6 +3,7 @@ import { CodegenConfig } from '@graphql-codegen/cli'
 const config: CodegenConfig = {
   schema: 'http://localhost:5000/graphql',
   documents: ['src/**/*.tsx'],
+  emitLegacyCommonJSImports: false,
   generates: {
     './src/__generated__/': {
       preset: 'client',

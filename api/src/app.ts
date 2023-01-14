@@ -5,13 +5,11 @@ import { expressMiddleware } from '@apollo/server/express4'
 import { buildContext } from 'graphql-passport'
 import cors from 'cors'
 import { ApolloServer } from '@apollo/server'
-import setUpPassport from './config/passport'
+import './config/passport'
 
 export const app = express()
 
 export function setUpApp(server: ApolloServer<any>, store: Store) {
-  setUpPassport()
-
   //middlewares
   app.use(express.json())
   app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
