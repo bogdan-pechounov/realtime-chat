@@ -12,22 +12,26 @@ type Message = {
 }
 
 function MessageList() {
-  const [newMessages, setNewMessages] = useState<Message[]>([])
   const { data } = useQuery(MESSAGES)
   useSubscription(MESSAGE_CREATED, {
     onData({
       data: {
         data: { messageCreated },
       },
+      client,
     }) {
-      setNewMessages([...newMessages, messageCreated as Message])
+      client.writeQuery({
+        query: MESSAGES,
+        data: {
+          messages: [...data.messages, messageCreated],
+        },
+      })
     },
   })
   if (!data) return <p>No messages</p>
-  const messages = [...data.messages, ...newMessages]
   return (
     <div>
-      {messages.map(({ id, body, user }: Message) => {
+      {data.messages.map(({ id, body, user }: Message) => {
         return (
           <div key={id}>
             {user.name} | {body}
