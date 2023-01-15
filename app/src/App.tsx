@@ -1,6 +1,6 @@
 import './App.css'
+import Chat from './components/Chat'
 import Login from './components/Login'
-import MessageList from './components/MessageList'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div>
       <Navbar />
       <Login />
-      <MessageList />
+      <Chat />
     </div>
   )
 }

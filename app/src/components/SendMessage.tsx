@@ -5,15 +5,21 @@ import SendIcon from '@mui/icons-material/Send'
 import { FormControl, TextField } from '@mui/material'
 import { IconButton } from '@mui/material'
 import { Stack } from '@mui/material'
-import { InputLabel } from '@mui/material'
 
-function SendMessage() {
+type SendMessageProps = {
+  onSend: () => void
+}
+function SendMessage({ onSend }: SendMessageProps) {
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const [body, setBody] = useState('')
 
-  function onSubmit(e: React.FormEvent) {
+  const disabled = body.length === 0
+  const color = disabled ? 'disabled' : 'primary'
+
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    sendMessage({ variables: { body } })
+    await sendMessage({ variables: { body } })
+    onSend()
   }
 
   return (
@@ -26,10 +32,11 @@ function SendMessage() {
             value={body}
             label='Type a message...'
             onChange={(e) => setBody(e.target.value)}
+            variant='outlined'
           ></TextField>
         </FormControl>
-        <IconButton aria-label='send' type='submit'>
-          <SendIcon color='primary' />
+        <IconButton aria-label='send' type='submit' disabled={disabled}>
+          <SendIcon color={color} />
         </IconButton>
       </Stack>
     </form>
