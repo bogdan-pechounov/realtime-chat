@@ -6,7 +6,11 @@ import { List, ListItemText, Paper, Container } from '@mui/material'
 import SendMessage from './SendMessage'
 import { Box } from '@mui/material'
 
-function Chat() {
+type ChatProps = {
+  user: IUser | undefined | null
+}
+
+function Chat({ user }: ChatProps) {
   //#region Messages
   const { data } = useQuery<IMessages>(MESSAGES)
   useSubscription(MESSAGE_CREATED, {
@@ -60,14 +64,24 @@ function Chat() {
 
   return (
     <Container
-      sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: '1 1 auto',
+        overflow: 'auto',
+        padding: '16px 0',
+      }}
     >
-      <Box my={1} height='100%'>
+      <Box height='100%'>
         <Paper
           elevation={6}
-          sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+          }}
         >
-          <List sx={{ flex: '1 1 auto' }}>
+          <List sx={{ flex: '1 1 auto', overflow: 'auto' }}>
             {data?.messages?.map(({ id, body, user }: IMessage) => {
               return (
                 <ListItemText key={id}>
@@ -78,7 +92,7 @@ function Chat() {
             <div ref={bottomOfList}></div>
           </List>
           <Box p={2}>
-            <SendMessage onSend={scrollToBottom} />
+            <SendMessage onSend={scrollToBottom} user={user} />
           </Box>
         </Paper>
       </Box>

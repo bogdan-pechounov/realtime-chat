@@ -6,11 +6,12 @@ import LoginDialog from './LoginDialog'
 import { LOGOUT } from '~/graphql/mutations'
 import Stack from '@mui/material/Stack'
 
-function Navbar() {
-  const { data } = useQuery<IMe>(ME)
-  const [logout] = useMutation(LOGOUT)
+type NavbarProps = {
+  user: IUser | undefined | null
+}
 
-  console.log(data?.me)
+function Navbar({ user }: NavbarProps) {
+  const [logout] = useMutation(LOGOUT)
 
   const handleLogout = async () => {
     logout({ refetchQueries: [{ query: ME }] })
@@ -26,9 +27,9 @@ function Navbar() {
           <Typography variant='h5' sx={{ flexGrow: 1 }}>
             Chat App
           </Typography>
-          {data?.me ? (
+          {user ? (
             <Stack spacing={2} direction='row'>
-              <Typography variant='h6'>{data.me?.name}</Typography>
+              <Typography variant='h6'>{user.name}</Typography>
               <Button variant='contained' onClick={handleLogout}>
                 Logout
               </Button>

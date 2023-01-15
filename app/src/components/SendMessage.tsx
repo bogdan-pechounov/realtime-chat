@@ -8,17 +8,20 @@ import { Stack } from '@mui/material'
 
 type SendMessageProps = {
   onSend: () => void
+  user: IUser | undefined | null
 }
-function SendMessage({ onSend }: SendMessageProps) {
+
+function SendMessage({ onSend, user }: SendMessageProps) {
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const [body, setBody] = useState('')
 
-  const disabled = body.length === 0
+  const disabled = body.length === 0 || !user
   const color = disabled ? 'disabled' : 'primary'
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     await sendMessage({ variables: { body } })
+    setBody('')
     onSend()
   }
 
