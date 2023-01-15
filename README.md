@@ -10,3 +10,5 @@ Messaging app using GraphQL subscriptions
 [Vite](https://vitejs.dev/)
 
 [Vitest](https://vitest.dev)
+
+[React Material UI](https://mui.com/material-ui/)
