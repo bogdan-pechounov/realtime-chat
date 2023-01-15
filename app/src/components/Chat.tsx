@@ -59,10 +59,15 @@ function Chat() {
   //#endregion
 
   return (
-    <Container>
-      <Box my={1}>
-        <Paper elevation={6}>
-          <List sx={{ height: '70vh', overflow: 'auto' }}>
+    <Container
+      sx={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto' }}
+    >
+      <Box my={1} height='100%'>
+        <Paper
+          elevation={6}
+          sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+        >
+          <List sx={{ flex: '1 1 auto' }}>
             {data?.messages?.map(({ id, body, user }: IMessage) => {
               return (
                 <ListItemText key={id}>
