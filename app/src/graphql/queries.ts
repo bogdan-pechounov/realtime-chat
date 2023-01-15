@@ -18,6 +18,7 @@ export const MESSAGES = gql`
         id
         name
       }
+      createdAt
     }
   }
 `

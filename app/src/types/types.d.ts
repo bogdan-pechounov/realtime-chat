@@ -7,4 +7,5 @@ interface IMessage {
   id: string
   body: string
   user: IUser
+  createdAt: number
 }

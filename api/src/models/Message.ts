@@ -1,9 +1,10 @@
-import { model, Schema } from 'mongoose'
+import { Date, model, Schema } from 'mongoose'
 import { IUser } from './User'
 
 export interface IMessage {
   body: string
   user: IUser
+  createdAt: Date
 }
 
 const messageSchema = new Schema<IMessage>(

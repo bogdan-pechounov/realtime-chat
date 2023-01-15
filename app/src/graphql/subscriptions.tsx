@@ -9,6 +9,7 @@ export const MESSAGE_CREATED = gql`
         id
         name
       }
+      createdAt
     }
   }
 `

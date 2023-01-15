@@ -5,12 +5,26 @@ import User from '../models/User'
 import { Resolvers, User as IUser } from '../generated/graphql'
 import { Request as ExpressRequest } from 'express'
 import { PassportContext } from 'graphql-passport'
+import { GraphQLScalarType } from 'graphql/type'
 
 export interface MyContext extends PassportContext<IUser, ExpressRequest> {}
 
 const pubsub = new PubSub()
 
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  //@ts-ignore
+  serialize(value: Date) {
+    return value.getTime() // Convert outgoing Date to integer for JSON
+  },
+  //@ts-ignore
+  parseValue(value: number) {
+    return new Date(value) // Convert incoming integer to Date
+  },
+})
+
 const resolvers: Resolvers = {
+  Date: dateScalar,
   Message: {
     async user({ user }) {
       return await User.findById(user)

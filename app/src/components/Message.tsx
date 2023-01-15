@@ -6,6 +6,7 @@ import {
   Stack,
   Tooltip,
 } from '@mui/material'
+import { useMemo } from 'react'
 
 type MessageProps = {
   me: IUser | undefined | null
@@ -41,9 +42,15 @@ function stringAvatar(name: string) {
   }
 }
 
-function Message({ message: { body, user }, me }: MessageProps) {
+function Message({ message: { body, user, createdAt }, me }: MessageProps) {
   const align = user.id === me?.id ? 'end' : 'start'
   const direction = user.id === me?.id ? 'row-reverse' : 'row'
+
+  const formattedTime = useMemo<string>(() => {
+    const date = new Date(createdAt)
+    return date.toTimeString().slice(0, 5)
+  }, [createdAt])
+
   return (
     <ListItem>
       <Stack direction={direction} width='100%'>
@@ -54,7 +61,7 @@ function Message({ message: { body, user }, me }: MessageProps) {
         </Box>
         <Stack direction='column' textAlign={align}>
           <ListItemText primary={body} />
-          <ListItemText secondary='10:00' />
+          <ListItemText secondary={formattedTime} />
         </Stack>
       </Stack>
     </ListItem>

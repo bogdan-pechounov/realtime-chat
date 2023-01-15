@@ -1,3 +1,5 @@
+scalar Date
+
 type User {
   id: String
   name: String
@@ -7,6 +9,7 @@ type Message {
   id: String
   body: String
   user: User
+  createdAt: Date
 }
 
 type Query {
