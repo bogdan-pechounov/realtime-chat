@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Hidden, Toolbar, Typography } from '@mui/material'
 import ChatIcon from '@mui/icons-material/Chat'
 import { useMutation, useQuery } from '@apollo/client'
 import { ME } from '~/graphql/queries'
@@ -29,7 +29,12 @@ function Navbar({ user }: NavbarProps) {
           </Typography>
           {user ? (
             <Stack spacing={2} direction='row'>
-              <Typography variant='h6'>{user.name}</Typography>
+              <Typography
+                variant='h6'
+                sx={{ display: { xs: 'none', md: 'block' } }}
+              >
+                {user.name}
+              </Typography>
               <Button variant='contained' onClick={handleLogout}>
                 Logout
               </Button>

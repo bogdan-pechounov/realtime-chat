@@ -6,10 +6,13 @@ export interface IMessage {
   user: IUser
 }
 
-const messageSchema = new Schema<IMessage>({
-  body: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-})
+const messageSchema = new Schema<IMessage>(
+  {
+    body: { type: String, required: true },
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+  },
+  { timestamps: true }
+)
 
 const Message = model<IMessage>('Message', messageSchema)
 

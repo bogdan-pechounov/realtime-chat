@@ -13,7 +13,7 @@ type ChatProps = {
 
 function Chat({ user }: ChatProps) {
   //#region Messages
-  const { data } = useQuery<IMessages>(MESSAGES)
+  const { data: { messages } = {} } = useQuery<IMessages>(MESSAGES)
   const { data: { messageCreated } = {} } = useSubscription<IMessageCreated>(
     MESSAGE_CREATED,
     {
@@ -22,7 +22,7 @@ function Chat({ user }: ChatProps) {
         client.writeQuery({
           query: MESSAGES,
           data: {
-            messages: [...(data?.messages ?? []), messageCreated],
+            messages: [...(messages ?? []), messageCreated],
           },
         })
       },
@@ -35,12 +35,16 @@ function Chat({ user }: ChatProps) {
   const [scrollOnce, setScrollOnce] = useState(false)
 
   useEffect(() => {
-    if (!scrollOnce && data?.messages) {
+    //scroll on first load
+    if (!scrollOnce && messages) {
       scrollToBottom()
       setScrollOnce(true)
-    } else if (isBottom()) scrollToBottom()
+    }
+    //scroll only if already at the bottom
+    else if (isBottom()) scrollToBottom()
+    //scroll if you sent the message
     else if (messageCreated?.user.id === user?.id) scrollToBottom()
-  }, [data])
+  }, [messages])
 
   /**
    * Check if at bottom before scrolling
@@ -82,12 +86,8 @@ function Chat({ user }: ChatProps) {
           }}
         >
           <List sx={{ flex: '1 1 auto', overflow: 'auto' }}>
-            {data?.messages?.map((message: IMessage) => {
-              return (
-                <ListItemText key={message.id}>
-                  <Message message={message} me={user} />
-                </ListItemText>
-              )
+            {messages?.map((message: IMessage) => {
+              return <Message key={message.id} message={message} me={user} />
             })}
             <div ref={bottomOfList}></div>
           </List>
