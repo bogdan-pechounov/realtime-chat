@@ -6,6 +6,7 @@ export const MESSAGE_CREATED = gql`
       id
       body
       user {
+        id
         name
       }
     }

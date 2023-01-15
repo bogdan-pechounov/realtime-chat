@@ -5,6 +5,7 @@ import { MESSAGE_CREATED } from '../graphql/subscriptions'
 import { List, ListItemText, Paper, Container } from '@mui/material'
 import SendMessage from './SendMessage'
 import { Box } from '@mui/material'
+import Message from './Message'
 
 type ChatProps = {
   user: IUser | undefined | null
@@ -13,22 +14,20 @@ type ChatProps = {
 function Chat({ user }: ChatProps) {
   //#region Messages
   const { data } = useQuery<IMessages>(MESSAGES)
-  useSubscription(MESSAGE_CREATED, {
-    onData({
-      data: {
-        data: { messageCreated },
+  const { data: { messageCreated } = {} } = useSubscription<IMessageCreated>(
+    MESSAGE_CREATED,
+    {
+      onData({ data: { data: { messageCreated } = {} }, client }) {
+        //append new message to the cached response
+        client.writeQuery({
+          query: MESSAGES,
+          data: {
+            messages: [...(data?.messages ?? []), messageCreated],
+          },
+        })
       },
-      client,
-    }) {
-      //append new message to the cached response
-      client.writeQuery({
-        query: MESSAGES,
-        data: {
-          messages: [...(data?.messages ?? []), messageCreated],
-        },
-      })
-    },
-  })
+    }
+  )
   //#endregion
 
   //#region Scrolling
@@ -40,6 +39,7 @@ function Chat({ user }: ChatProps) {
       scrollToBottom()
       setScrollOnce(true)
     } else if (isBottom()) scrollToBottom()
+    else if (messageCreated?.user.id === user?.id) scrollToBottom()
   }, [data])
 
   /**
@@ -82,17 +82,17 @@ function Chat({ user }: ChatProps) {
           }}
         >
           <List sx={{ flex: '1 1 auto', overflow: 'auto' }}>
-            {data?.messages?.map(({ id, body, user }: IMessage) => {
+            {data?.messages?.map((message: IMessage) => {
               return (
-                <ListItemText key={id}>
-                  {user.name} | {body}
+                <ListItemText key={message.id}>
+                  <Message message={message} me={user} />
                 </ListItemText>
               )
             })}
             <div ref={bottomOfList}></div>
           </List>
           <Box p={2}>
-            <SendMessage onSend={scrollToBottom} user={user} />
+            <SendMessage user={user} />
           </Box>
         </Paper>
       </Box>

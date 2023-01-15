@@ -7,11 +7,10 @@ import { IconButton } from '@mui/material'
 import { Stack } from '@mui/material'
 
 type SendMessageProps = {
-  onSend: () => void
   user: IUser | undefined | null
 }
 
-function SendMessage({ onSend, user }: SendMessageProps) {
+function SendMessage({ user }: SendMessageProps) {
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const [body, setBody] = useState('')
 
@@ -22,7 +21,6 @@ function SendMessage({ onSend, user }: SendMessageProps) {
     e.preventDefault()
     await sendMessage({ variables: { body } })
     setBody('')
-    onSend()
   }
 
   return (
@@ -36,6 +34,7 @@ function SendMessage({ onSend, user }: SendMessageProps) {
             label='Type a message...'
             onChange={(e) => setBody(e.target.value)}
             variant='outlined'
+            autoComplete='off'
           ></TextField>
         </FormControl>
         <IconButton aria-label='send' type='submit' disabled={disabled}>

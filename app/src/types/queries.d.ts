@@ -5,3 +5,7 @@ interface IMe {
 interface IMessages {
   messages?: [IMessage]
 }
+
+interface IMessageCreated {
+  messageCreated: IMessage
+}
