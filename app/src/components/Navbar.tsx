@@ -31,7 +31,7 @@ function Navbar({ user }: NavbarProps) {
             <Stack spacing={2} direction='row'>
               <Typography
                 variant='h6'
-                sx={{ display: { xs: 'none', md: 'block' } }}
+                sx={{ display: { xs: 'none', sm: 'block' } }}
               >
                 {user.name}
               </Typography>

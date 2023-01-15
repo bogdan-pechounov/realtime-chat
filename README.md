@@ -1,6 +1,9 @@
 # References
 Messaging app using GraphQL subscriptions
 
+![Demo](./demo.mp4)
+
+
 [Authentication and Authorization with GraphQL and Passport](https://jkettmann.com/authentication-and-authorization-with-graphql-and-passport)
 
 [Apollo Client](https://www.apollographql.com/docs/react/)
