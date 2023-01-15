@@ -7,7 +7,11 @@ export const LOGIN = gql`
     }
   }
 `
-
+export const LOGOUT = gql`
+  mutation {
+    logout
+  }
+`
 export const SEND_MESSAGE = gql`
   mutation ($body: String!) {
     sendMessage(body: $body) {

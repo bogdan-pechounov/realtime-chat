@@ -17,6 +17,7 @@ type Query {
 
 type Mutation {
   login(name: String!, password: String!): User
+  logout: String
   sendMessage(body: String!): Message
 }
 

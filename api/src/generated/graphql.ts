@@ -24,6 +24,7 @@ export type Message = {
 export type Mutation = {
   __typename?: 'Mutation';
   login?: Maybe<User>;
+  logout?: Maybe<Scalars['String']>;
   sendMessage?: Maybe<Message>;
 };
 
@@ -154,6 +155,7 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'name' | 'password'>>;
+  logout?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sendMessage?: Resolver<Maybe<ResolversTypes['Message']>, ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'body'>>;
 };
 

@@ -3,7 +3,10 @@ import { PubSub } from 'graphql-subscriptions'
 import Message from '../models/Message'
 import User from '../models/User'
 import { Resolvers, User as IUser } from '../generated/graphql'
-import { isValidObjectId } from 'mongoose'
+import { Request as ExpressRequest } from 'express'
+import { PassportContext } from 'graphql-passport'
+
+export interface MyContext extends PassportContext<IUser, ExpressRequest> {}
 
 const pubsub = new PubSub()
 
@@ -35,6 +38,10 @@ const resolvers: Resolvers = {
       )
       await context.login(user)
       return user
+    },
+    async logout(_parent: any, _args: any, context: MyContext) {
+      context.logout()
+      return 'Logged out'
     },
     async sendMessage(_parent: any, { body }, context: any) {
       if (!context.isAuthenticated()) throw new Error('Not logged in')
