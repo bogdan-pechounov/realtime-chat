@@ -1,6 +1,8 @@
 Messaging app using GraphQL subscriptions
 
-https://user-images.githubusercontent.com/119967588/212564039-a013ed7d-a5a7-4248-9c1a-f9563e256a30.mp4
+
+https://user-images.githubusercontent.com/119967588/212579370-db2f91de-62a9-4f34-a5cf-b6022952a848.mp4
+
 
 # References
 
