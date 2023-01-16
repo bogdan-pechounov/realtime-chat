@@ -4,16 +4,6 @@ import userEvent from '@testing-library/user-event'
 import LoginDialog from '~/components/LoginDialog'
 
 describe('Login Dialog', async () => {
-  // it('renders', async () => {
-  //   const user = userEvent.setup()
-  //   customRender(<Login />)
-
-  //   expect(usernameInput).toHaveValue('user')
-  //   expect(passwordInput).toHaveValue('password')
-  //   await user.click(loginButton)
-  //   await waitFor(() => expect(usernameInput).toHaveValue(''))
-  //   expect(passwordInput).toHaveValue('')
-  // })
   it('renders', async () => {
     const user = userEvent.setup()
     customRender(<LoginDialog />)
